@@ -1,0 +1,31 @@
+{
+  "name": "christmas-19-game",
+  "version": "1.0.0",
+  "description": "game to be played in holiday 19",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johannesmu/hgame-19.git"
+  },
+  "keywords": [
+    "game",
+    "christmas"
+  ],
+  "author": "johannes muljana and pamela lee brenner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johannesmu/hgame-19/issues"
+  },
+  "homepage": "https://github.com/johannesmu/hgame-19#readme",
+  "dependencies": {
+    "createjs": "^1.0.1",
+    "easeljs": "^1.0.2",
+    "gsap": "^3.0.4"
+  }
+}
