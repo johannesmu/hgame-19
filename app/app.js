@@ -1,4 +1,4 @@
-//when window is loaded
+
 window.addEventListener("load", function () {
     //adjust canvas size
     resizeCanvas();
