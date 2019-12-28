@@ -30,10 +30,11 @@ function html(){
 }
 
 function css(){
-  return src( 'scss/*.scss')
+  return src( 'scss/main.scss')
     .pipe(sass())
     .pipe(sourcemaps.init())
     .pipe(cleanCSS())
+    .pipe( rename({extname: '.min.css'}) )
     .pipe(sourcemaps.write('.'))
     .pipe(dest(buildDir + '/css'))
     .pipe(browsersync.stream())
@@ -68,6 +69,7 @@ function browserSync(done) {
   browsersync.init({
     watch: true,
     port: 3000,
+    cors: true,
     server: './dist'
   });
   done();
@@ -79,7 +81,7 @@ function reload( done ){
 }
 
 function watchFiles(){
-  return watch( ['./scss/*.scss', './lib/*.js', srcDir + '/*.html'], series(clean,css,app, lib, data, assets,reload));
+  return watch( ['./scss/*.scss', './lib/*.js', srcDir + '/*.html'], series(clean,data, assets, css, lib, app, html,reload));
 }
 
 

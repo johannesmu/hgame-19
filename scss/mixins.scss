@@ -1,0 +1,37 @@
+@mixin reset {
+  margin: 0;
+  padding: 0;
+}
+
+@mixin position($pos) {
+  @if $pos == 'a' {
+    position: absolute;
+  }
+  @else if $pos == 'r' {
+    position: relative;
+  }
+}
+
+@mixin pad( $val, $side: 'all') {
+  @if $side == 'all' {
+    padding: $val;
+  }
+  @else if $side == 'l' {
+    padding-left: $val;
+  }
+  @else if $side == 'r' {
+    padding-right: $val;
+  }
+  @else if $side == 't' {
+    padding-top: $val;
+  }
+  @else if $side == 'b' {
+    padding-bottom: $val;
+  }
+  @else if $side == 'x' {
+    padding: 0 $val;
+  }
+  @else if $side == 'y' {
+    padding: $val 0;
+  }
+}
