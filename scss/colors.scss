@@ -1,4 +1,5 @@
 $main-dark: #333;
 $main-light: #eee;
-$primary: hsl(219, 67%, 58%);
+$primary: hsla(219, 67%, 58%, 1);
+$secondary: hsla(0, 100%, 50%, 1);
 $main-bg: linear-gradient( $primary, lighten($primary,30%));

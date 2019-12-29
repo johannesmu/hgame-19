@@ -51,7 +51,7 @@ function app(){
 }
 
 function lib() {
-  return src(['node_modules/easeljs/lib/*.min.js', 'node_modules/gsap/dist/gsap.min.js'])
+  return src(['node_modules/easeljs/lib/*.min.js', 'node_modules/gsap/dist/gsap.min.js', 'node_modules/createjs/builds/1.0.0/*.min.js', 'node_modules/axios/dist/*.min.js'])
   .pipe( dest(buildDir + '/lib') )
 }
 
@@ -81,7 +81,7 @@ function reload( done ){
 }
 
 function watchFiles(){
-  return watch( ['./scss/*.scss', './lib/*.js', srcDir + '/*.html'], series(clean,data, assets, css, lib, app, html,reload));
+  return watch( ['./scss/*.scss', './lib/*.js', srcDir + '/*.html', './app/*.js'], series(clean,data, assets, css, lib, app, html,reload));
 }
 
 
