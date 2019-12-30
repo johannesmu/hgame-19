@@ -81,7 +81,7 @@ function reload( done ){
 }
 
 function watchFiles(){
-  return watch( ['./scss/*.scss', './lib/*.js', srcDir + '/*.html', './app/*.js'], series(clean,data, assets, css, lib, app, html,reload));
+  return watch( ['./scss/*.scss', './lib/*.js', srcDir + '/*.html', './app/*.js', 'data/*.json'], series(clean,data, assets, css, lib, app, html,reload));
 }
 
 

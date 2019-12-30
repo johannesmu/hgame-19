@@ -29,27 +29,31 @@ function initTimer(rate) {
 
 function setupPlayer() {
   return loadImage("assets/sprites/player/sprite2X.png")
-  .then((image) => {
-    const spriteSheetData = {
-      images: [image],
-      frames: {
-        width: 400,
-        height: 300
-      },
-      animations: {
-        fly: [0, 49],
-        dropping: [6],
-        dead: [7]
-      }
-    };
-    const spriteSheet = new createjs.SpriteSheet(spriteSheetData);
-    const animation = new createjs.Sprite(spriteSheet, "fly");
-    const player = new createjs.Sprite(spriteSheet, animation);
-    return player;
-  })
-  .catch((err) => {
-    return null;
-  })
+    .then((image) => {
+      const spriteSheetData = {
+        images: [image],
+        frames: {
+          width: 400,
+          height: 300
+        },
+        animations: {
+          fly: [0, 49],
+          dropping: [6],
+          dead: [7]
+        }
+      };
+      const spriteSheet = new createjs.SpriteSheet(spriteSheetData);
+      const animation = new createjs.Sprite(spriteSheet, "fly");
+      const player = new createjs.Sprite(spriteSheet, animation);
+      return player;
+    })
+    .catch((err) => {
+      return null;
+    })
+}
+
+function playerDefault() {
+
 }
 
 function loadImage(url) {
@@ -63,9 +67,29 @@ function loadImage(url) {
   })
 }
 
+function getControlsConfig( url ) {
+  //return a promise
+  return new Promise((resolve, reject) => {
+    const request = new XMLHttpRequest();
+    request.overrideMimeType('text/json');
+    request.onreadystatechange = () => {
+      const rs = request.readyState;
+      if (rs == 4 || rs == 0) {
+        if (request.status == 200) {
+          let data = ( JSON.parse( request.responseText ) ) ? JSON.parse( request.responseText ) : false;
+          resolve(data)
+        }
+        else{
+          reject(false);
+        }
+      }
+    }
+    request.open('GET', url );
+    request.send();
+  })
+}
 
 
-
-function getRandom( limit ) {
-  return Math.round( Math.random() * limit );
+function getRandom(limit) {
+  return Math.round(Math.random() * limit);
 }
