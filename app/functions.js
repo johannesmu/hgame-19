@@ -12,7 +12,7 @@ function resizeCanvas() {
   canvas.setAttribute('width', containerWidth);
   canvas.setAttribute('height', (containerHeight - 5));
   // return canvas object + data
-  canvasData = { "instance": canvas, "width" : containerWidth, "height" : containerHeight };
+  canvasData = { "instance": canvas, "width": containerWidth, "height": containerHeight };
   return canvasData;
 }
 
@@ -69,7 +69,7 @@ function loadImage(url) {
   })
 }
 
-function getControlsConfig( url ) {
+function getControlsConfig(url) {
   //return a promise
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
@@ -78,38 +78,42 @@ function getControlsConfig( url ) {
       const rs = request.readyState;
       if (rs == 4 || rs == 0) {
         if (request.status == 200) {
-          let data = ( JSON.parse( request.responseText ) ) ? JSON.parse( request.responseText ) : false;
+          let data = (JSON.parse(request.responseText)) ? JSON.parse(request.responseText) : false;
           resolve(data)
         }
-        else{
+        else {
           reject(false);
         }
       }
     }
-    request.open('GET', url );
+    request.open('GET', url);
     request.send();
   })
 }
 
-function createPayload( player ) {
+function createPayload(player) {
   // get player position
   const pX = player.x;
   const pY = player.y;
-  // spawn a load
-  console.log(pX,pY);
-  const graphic = new createjs.Graphics().beginFill("#ff0000").drawRect(pX, pY+100, 50, 50);
+  rect = player.getTransformedBounds();
+  // spawn a payload
+  const graphic = new createjs.Graphics()
+  .beginFill("hsl(143°, 12%, 44%)").drawRect(pX + (rect.width * 0.7) , pY +  (rect.height * 0.7), 20, 10);
   const load = new createjs.Shape(graphic);
   return load;
 }
 
-function managePayLoads( payLoadsArray, gameCanvas, gameStage ) {
+function managePayLoads(payLoadsArray, gameCanvas, gameStage) {
   payLoadsArray.forEach(
     (payload) => {
       payload.x = payload.x + windDirection;
       payload.y = payload.y + dropRate;
       // if payload is outside the canvas
-      // console.log( );
-      if( payload.x > gameCanvas.width || payload.x < 0 || payload.y > gameCanvas.height ) {
+      // console.log( payload.localToGlobal(payload.x,payload.y) );
+      let origin = payload.graphics.command;
+      let stageX = origin.x + payload.x;
+      let stageY = origin.y + payload.y;
+      if (stageX > gameCanvas.width || stageX + origin.w < 0 || stageY + origin.h > gameCanvas.height) {
         let obj = payLoadsArray.shift();
         gameStage.removeChild(obj);
         console.log('payload removed');

@@ -1,6 +1,6 @@
 let windDirection = 1;
 let player = null;
-let dropRate = 1;
+let dropRate = 4;
 let playerAlive = true;
 let stage = null;
 let canvas = null;
@@ -25,8 +25,8 @@ window.addEventListener('load', () => {
       player = playerObj;
       player.x = windowWidth / 2;
       player.y = 100;
-      player.scaleX = 0.5;
-      player.scaleY = 0.5;
+      player.scaleX = 0.3;
+      player.scaleY = 0.3;
       player.gotoAndPlay('fly');
       stage.addChild(player);
       stage.update();
@@ -47,6 +47,7 @@ window.addEventListener('load', () => {
             console.log('dropping');
             if (payLoads.length < 1) {
               let payload = createPayload(player);
+              console.log(payload.graphics.command);
               stage.addChild(payload);
               payLoads.push(payload);
             }
