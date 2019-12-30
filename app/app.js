@@ -1,17 +1,25 @@
-let windDirection = 3;
+let windDirection = 1;
 let player = null;
+let dropRate = 1;
+let playerAlive = true;
+let stage = null;
+let canvas = null;
+let info = null;
+let payLoads = new Array();
 
 //in case window gets resized
 window.addEventListener('resize', () => {
-  resizeCanvas();
+  canvas = resizeCanvas();
 });
 
 window.addEventListener('load', () => {
+  canvas = resizeCanvas();
   initApp();
+  info = document.querySelector('#info');
   const windowWidth = document.querySelector('#game-container').clientWidth;
   const windowHeight = document.querySelector('#game-container').clientHeight;
   const canvasElement = document.querySelector('#main-canvas');
-  const stage = initStage(canvasElement);
+  stage = initStage(canvasElement);
   setupPlayer()
     .then((playerObj) => {
       player = playerObj;
@@ -26,17 +34,22 @@ window.addEventListener('load', () => {
 
   getControlsConfig('data/controls.json')
     .then((config) => {
-      if(config) {
-        console.log(config.up,config.down,config.drop);
+      if (config) {
+        console.log(config.up, config.down, config.drop);
         window.addEventListener('keydown', (event) => {
-          if( event.keyCode == config.up ) {
+          if (event.keyCode == config.up) {
             console.log('upping');
           }
-          else if( event.keyCode == config.down ) {
+          else if (event.keyCode == config.down) {
             console.log('downing');
           }
-          else if ( event.keyCode == config.drop ) {
+          else if (event.keyCode == config.drop) {
             console.log('dropping');
+            if (payLoads.length < 1) {
+              let payload = createPayload(player);
+              stage.addChild(payload);
+              payLoads.push(payload);
+            }
           }
         })
       }
@@ -46,6 +59,8 @@ window.addEventListener('load', () => {
   // initialise timer
   const timer = initTimer(60);
   timer.on('tick', () => {
+    info.innerText = timer.framerate.toFixed(2);
+    managePayLoads(payLoads, canvas, stage);
     stage.update();
   })
 })

@@ -1,5 +1,4 @@
 function initApp() {
-  resizeCanvas();
   initStage();
 }
 
@@ -12,6 +11,9 @@ function resizeCanvas() {
   const canvas = document.getElementById('main-canvas');
   canvas.setAttribute('width', containerWidth);
   canvas.setAttribute('height', (containerHeight - 5));
+  // return canvas object + data
+  canvasData = { "instance": canvas, "width" : containerWidth, "height" : containerHeight };
+  return canvasData;
 }
 
 function initStage(elm) {
@@ -87,6 +89,33 @@ function getControlsConfig( url ) {
     request.open('GET', url );
     request.send();
   })
+}
+
+function createPayload( player ) {
+  // get player position
+  const pX = player.x;
+  const pY = player.y;
+  // spawn a load
+  console.log(pX,pY);
+  const graphic = new createjs.Graphics().beginFill("#ff0000").drawRect(pX, pY+100, 50, 50);
+  const load = new createjs.Shape(graphic);
+  return load;
+}
+
+function managePayLoads( payLoadsArray, gameCanvas, gameStage ) {
+  payLoadsArray.forEach(
+    (payload) => {
+      payload.x = payload.x + windDirection;
+      payload.y = payload.y + dropRate;
+      // if payload is outside the canvas
+      // console.log( );
+      if( payload.x > gameCanvas.width || payload.x < 0 || payload.y > gameCanvas.height ) {
+        let obj = payLoadsArray.shift();
+        gameStage.removeChild(obj);
+        console.log('payload removed');
+      }
+    }
+  );
 }
 
 
