@@ -1,5 +1,5 @@
 {
-  "up": "38",
-  "down": "40",
-  "drop": "32"
+  "up": "ArrowUp",
+  "down": "ArrowDown",
+  "drop": "Space"
 }

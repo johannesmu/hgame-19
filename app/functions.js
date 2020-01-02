@@ -40,7 +40,7 @@ function setupPlayer() {
         },
         animations: {
           fly: [0, 49],
-          dropping: [6],
+          dropping: [49],
           dead: [7]
         }
       };
@@ -116,12 +116,46 @@ function managePayLoads(payLoadsArray, gameCanvas, gameStage) {
       if (stageX > gameCanvas.width || stageX + origin.w < 0 || stageY + origin.h > gameCanvas.height) {
         let obj = payLoadsArray.shift();
         gameStage.removeChild(obj);
-        console.log('payload removed');
+        // console.log('payload removed');
       }
     }
   );
 }
 
+function createTarget() {
+
+}
+
+function manageTargets() {
+
+}
+
+function setWindDirection() {
+  const num = getRandom(100);
+  if( num < 25 ) {
+    return 2;
+  }
+  else if( num >=25 && num < 50 ) {
+    return 1;
+  }
+  else if( num >= 50 && num < 75 ) {
+    return -1;
+  }
+  else {
+    return -2;
+  }
+}
+
+function changeWindIndicator( elem, direction ) {
+  if( direction > 0 ) {
+    elem.classList.remove('left');
+    elem.classList.add('right');
+  }
+  else {
+    elem.classList.remove('right');
+    elem.classList.add('left');
+  }
+}
 
 function getRandom(limit) {
   return Math.round(Math.random() * limit);

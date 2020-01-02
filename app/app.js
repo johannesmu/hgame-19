@@ -1,5 +1,7 @@
 let windDirection = 1;
 let player = null;
+let playerBounds = null;
+let playerMovementRate = 10;
 let dropRate = 4;
 let playerAlive = true;
 let stage = null;
@@ -27,6 +29,7 @@ window.addEventListener('load', () => {
       player.y = 100;
       player.scaleX = 0.3;
       player.scaleY = 0.3;
+      playerBounds = player.getTransformedBounds();
       player.gotoAndPlay('fly');
       stage.addChild(player);
       stage.update();
@@ -35,24 +38,27 @@ window.addEventListener('load', () => {
   getControlsConfig('data/controls.json')
     .then((config) => {
       if (config) {
-        console.log(config.up, config.down, config.drop);
         window.addEventListener('keydown', (event) => {
-          if (event.keyCode == config.up) {
-            console.log('upping');
-          }
-          else if (event.keyCode == config.down) {
-            console.log('downing');
-          }
-          else if (event.keyCode == config.drop) {
-            console.log('dropping');
-            if (payLoads.length < 1) {
+          const code = event.code;
+          console.log(event.code)
+          if (code == config.drop) {
+            // console.log('dropping');
+            if (payLoads.length < 2) {
               let payload = createPayload(player);
-              console.log(payload.graphics.command);
+              player.gotoAndPlay('dropping');
               stage.addChild(payload);
               payLoads.push(payload);
+              player.gotoAndPlay('fly');
             }
           }
-        })
+          else if (code == config.down) {
+            player.y = (player.y < (canvas.height - playerBounds.height) ) ? player.y + playerMovementRate: player.y;
+          }
+          else if (code == config.up) {
+            player.y = (player.y > 60)  ? player.y - playerMovementRate : player.y;
+          }
+        });
+        
       }
     })
     .catch(() => { })
@@ -62,6 +68,10 @@ window.addEventListener('load', () => {
   timer.on('tick', () => {
     info.innerText = timer.framerate.toFixed(2);
     managePayLoads(payLoads, canvas, stage);
+    if(  timer.getTicks() % 100 == 0  ) {
+      windDirection = setWindDirection();
+      changeWindIndicator( document.querySelector('.wind'), windDirection ) 
+    }
     stage.update();
   })
 })
