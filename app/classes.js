@@ -1,0 +1,5 @@
+class Payload {
+  constructor() {
+    
+  }
+}
