@@ -1,0 +1,71 @@
+@mixin reset {
+  margin: 0;
+  padding: 0;
+}
+
+@mixin position($pos) {
+  @if $pos == 'a' {
+    position: absolute;
+  }
+  @else if $pos == 'r' {
+    position: relative;
+  }
+}
+
+@mixin pad( $val, $side: 'all') {
+  @if $side == 'all' {
+    padding: $val;
+  }
+  @else if $side == 'l' {
+    padding-left: $val;
+  }
+  @else if $side == 'r' {
+    padding-right: $val;
+  }
+  @else if $side == 't' {
+    padding-top: $val;
+  }
+  @else if $side == 'b' {
+    padding-bottom: $val;
+  }
+  @else if $side == 'x' {
+    padding: 0 $val;
+  }
+  @else if $side == 'y' {
+    padding: $val 0;
+  }
+}
+
+@mixin flex($dir,$main,$cross) {
+  display: flex;
+  @if $dir == 'row' {
+    flex-direction: row;
+  }
+  @else if $dir == 'col' {
+    flex-direction: column;
+  }
+
+  @if $main == 'end' {
+    justify-content: flex-end;
+  }
+  @else if $main == 'center' {
+    justify-content: center;
+  }
+  @else if $main == 'start' {
+    justify-content: flex-start;
+  }
+  @else if $main == 'between' {
+    justify-content: space-between;
+  }
+
+  @if $cross == 'end' {
+    align-items: flex-end;
+  }
+  @else if $cross == 'center' {
+    align-items: center;
+  }
+  @else if $cross == 'start' {
+    align-items: flex-start;
+  }
+  
+}

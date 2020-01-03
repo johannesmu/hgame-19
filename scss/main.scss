@@ -1,0 +1,58 @@
+@import 'colors';
+@import 'mixins';
+
+$main-font-family: arial,sans-serif;
+$main-font-size: 14px;
+
+body#game-body {
+    @include reset;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    color: $main-dark;
+    font-family: $main-font-family;
+    font-size: $main-font-size;
+    #game-container {
+        min-height: 100vh;
+        background-image: $main-bg;
+        @include position(r);
+        .ribbon {
+            @include position(a);
+            top: 0;
+            left: 0;
+            background-color: transparentize($main-dark, $amount: 0.5);
+            width: 100%;
+            font-size: 0.5rem;
+            @include flex(row,between,center);
+            .game-title {
+                @include reset;
+                @include pad(0.5em);
+                color: $main-light;
+                text-shadow: 1px 1px 1px $main-dark;
+                box-sizing: border-box;
+            }
+            #info {
+                color: $main-light;
+                font-size: 1rem;
+                box-sizing: border-box;
+                @include pad(0.2em);
+            }
+            .wind {
+                // height: 20px;
+                // width: 20px;
+                border-color: transparent;
+                border-top: 10px solid transparent;
+                border-left: 0;
+                border-bottom: 10px solid transparent;
+                
+
+                &.right {
+                    border-left: 10px solid $tertiary;
+                }
+                &.left {
+                    border-right: 10px solid $tertiary;
+                }
+            }
+        }
+        
+    }
+}
