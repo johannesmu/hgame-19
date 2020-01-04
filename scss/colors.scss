@@ -2,5 +2,6 @@ $main-dark: #333;
 $main-light: #eee;
 $primary: hsl(32, 67%, 58%);
 $secondary: hsla(0, 100%, 50%, 1);
-$tertiary: hsl(157, 79%, 50%);
+$tertiary: hsl(197, 88%, 55%);
+$wind-gradient: linear-gradient(90deg, #ff0a0a 25%, #eeeeee 25%, #eeeeee 50%, #ff0a0a 50%, #ff0a0a 75%, #eeeeee 75%, #eeeeee 100%);
 $main-bg: linear-gradient( $primary, lighten($primary,30%));

@@ -97,8 +97,9 @@ function createPayload(player) {
   const pY = player.y;
   rect = player.getTransformedBounds();
   // spawn a payload
-  const graphic = new createjs.Graphics()
-  .beginFill("hsl(143°, 12%, 44%)").drawRect(pX + (rect.width * 0.7) , pY +  (rect.height * 0.7), 20, 10);
+  const graphic = new createjs.Graphics();
+  graphic.beginFill("white");
+  graphic.drawRect(pX + (rect.width * 0.7) , pY +  (rect.height * 0.7), 20, 10);
   const load = new createjs.Shape(graphic);
   return load;
 }
@@ -106,25 +107,22 @@ function createPayload(player) {
 function managePayLoads(payLoadsArray, gameCanvas, gameStage) {
   payLoadsArray.forEach(
     (payload) => {
-      payload.x = payload.x + windDirection;
-      payload.y = payload.y + dropRate;
+      payload.sprite.x = payload.sprite.x + payload.wind;
+      payload.sprite.y = payload.sprite.y + dropRate;
       // if payload is outside the canvas
       // console.log( payload.localToGlobal(payload.x,payload.y) );
-      let origin = payload.graphics.command;
-      let stageX = origin.x + payload.x;
-      let stageY = origin.y + payload.y;
+      let origin = payload.sprite.graphics.command;
+      let stageX = origin.x + payload.sprite.x;
+      let stageY = origin.y + payload.sprite.y;
       if (stageX > gameCanvas.width || stageX + origin.w < 0 || stageY + origin.h > gameCanvas.height) {
         let obj = payLoadsArray.shift();
-        gameStage.removeChild(obj);
-        // console.log('payload removed');
+        gameStage.removeChild(obj.sprite);
+        console.log('payload removed');
       }
     }
   );
 }
 
-function createTarget() {
-
-}
 
 function manageTargets() {
 
@@ -147,13 +145,29 @@ function setWindDirection() {
 }
 
 function changeWindIndicator( elem, direction ) {
-  if( direction > 0 ) {
-    elem.classList.remove('left');
-    elem.classList.add('right');
-  }
-  else {
-    elem.classList.remove('right');
-    elem.classList.add('left');
+  switch( direction ) {
+    case 1 :
+      elem.classList.remove('left');
+      elem.classList.add('right');
+      elem.classList.add('half');
+      break;
+    case 2 :
+      elem.classList.remove('left');
+      elem.classList.remove('half');
+      elem.classList.add('right');
+      break;
+    case -1 :
+      elem.classList.remove('right');
+      elem.classList.add('left');
+      elem.classList.add('half');
+      break;
+    case -2 :
+      elem.classList.remove('right');
+      elem.classList.remove('half');
+      elem.classList.add('left');
+      break;
+    default: 
+      break;
   }
 }
 

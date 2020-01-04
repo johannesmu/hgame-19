@@ -41,7 +41,7 @@ function css(){
 }
 
 function app(){
-  return src('app/*.js')
+  return src(['app/classes.js','app/functions.js','app/app.js'])
   .pipe( sourcemaps.init() )
   .pipe( concat('main.js') )
   .pipe( uglify() )

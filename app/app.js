@@ -1,3 +1,4 @@
+const debug = 1;
 let windDirection = 1;
 let player = null;
 let playerBounds = null;
@@ -40,13 +41,13 @@ window.addEventListener('load', () => {
       if (config) {
         window.addEventListener('keydown', (event) => {
           const code = event.code;
-          console.log(event.code)
           if (code == config.drop) {
             // console.log('dropping');
             if (payLoads.length < 2) {
-              let payload = createPayload(player);
+              // let payload = createPayload(player);
+              const payload = new Payload( player, windDirection );
               player.gotoAndPlay('dropping');
-              stage.addChild(payload);
+              stage.addChild(payload.sprite);
               payLoads.push(payload);
               player.gotoAndPlay('fly');
             }
@@ -66,11 +67,16 @@ window.addEventListener('load', () => {
   // initialise timer
   const timer = initTimer(60);
   timer.on('tick', () => {
-    info.innerText = timer.framerate.toFixed(2);
+    info.innerText = (debug == 1 ) ? timer.getMeasuredFPS().toFixed(2) : '';
     managePayLoads(payLoads, canvas, stage);
-    if(  timer.getTicks() % 100 == 0  ) {
-      windDirection = setWindDirection();
-      changeWindIndicator( document.querySelector('.wind'), windDirection ) 
+    if(  timer.getTicks() % 300 == 0  ) {
+      let oldDirection = windDirection;
+      let newDirection = setWindDirection();
+      if( oldDirection != newDirection ) {
+        windDirection = newDirection;
+        console.log(windDirection);
+        changeWindIndicator( document.querySelector('.wind'), windDirection )
+      }      
     }
     stage.update();
   })
