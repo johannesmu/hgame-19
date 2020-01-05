@@ -44,11 +44,7 @@ body#game-body {
                 background-size: 10px;
                 clip-path: polygon(0% 0%, 0% 100%, 100% 50%);
                 transition: clip-path 0.5s;
-                // border-color: transparent;
-                // border-top: 10px solid transparent;
-                // border-left: 0;
-                // border-bottom: 10px solid transparent;
-                // border-image: $wind-gradient;
+
                 &.right {
                     clip-path: polygon(50% 0%, 50% 100%, 100% 50%);
                     &.half {

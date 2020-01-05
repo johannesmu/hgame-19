@@ -9,6 +9,7 @@ let stage = null;
 let canvas = null;
 let info = null;
 let payLoads = new Array();
+let blocks = new Array();
 
 //in case window gets resized
 window.addEventListener('resize', () => {
@@ -67,14 +68,24 @@ window.addEventListener('load', () => {
   // initialise timer
   const timer = initTimer(60);
   timer.on('tick', () => {
+    // frame rate debug info
     info.innerText = (debug == 1 ) ? timer.getMeasuredFPS().toFixed(2) : '';
+    // manage payloads animation and removal
     managePayLoads(payLoads, canvas, stage);
-    if(  timer.getTicks() % 300 == 0  ) {
+    // create block using random timing
+    if(  timer.getTicks() % 400  == 0  ) {
+      const block = new Block(canvas);
+      console.log(block);
+      stage.addChild(block.sprite);
+      blocks.push(block);
+    }
+    manageBlocks( blocks, canvas, stage );
+    // setting wind direction
+    if(  timer.getTicks() % (100 + getRandom(200)) == 0  ) {
       let oldDirection = windDirection;
       let newDirection = setWindDirection();
       if( oldDirection != newDirection ) {
         windDirection = newDirection;
-        console.log(windDirection);
         changeWindIndicator( document.querySelector('.wind'), windDirection )
       }      
     }

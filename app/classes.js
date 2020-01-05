@@ -14,13 +14,20 @@ class Payload {
 }
 
 class Block {
-  constructor () {
-    this.initX = -30;
-    this.initY = 300;
+  constructor ( canvas ) {
+    this.initX = 0;
+    this.initY = canvas.height;
     this.height = this.getHeight();
-    
+    const graphic = new createjs.Graphics();
+    graphic.beginFill('red');
+    graphic.drawRect(0, 0, 100, this.height + 300 );
+    this.sprite = new createjs.Shape( graphic );
+    this.sprite.x = -100;
+    this.sprite.y = canvas.height - 100;
+    this.sprite.regX = 0;
+    this.sprite.regY = this.height;
   }
   getHeight() {
-    return Math.round( Math.random() * 500 );
+    return Math.round( Math.random() * 400 );
   }
 }

@@ -91,18 +91,18 @@ function getControlsConfig(url) {
   })
 }
 
-function createPayload(player) {
-  // get player position
-  const pX = player.x;
-  const pY = player.y;
-  rect = player.getTransformedBounds();
-  // spawn a payload
-  const graphic = new createjs.Graphics();
-  graphic.beginFill("white");
-  graphic.drawRect(pX + (rect.width * 0.7) , pY +  (rect.height * 0.7), 20, 10);
-  const load = new createjs.Shape(graphic);
-  return load;
-}
+// function createPayload(player) {
+//   // get player position
+//   const pX = player.x;
+//   const pY = player.y;
+//   rect = player.getTransformedBounds();
+//   // spawn a payload
+//   const graphic = new createjs.Graphics();
+//   graphic.beginFill("white");
+//   graphic.drawRect(pX + (rect.width * 0.7) , pY +  (rect.height * 0.7), 20, 10);
+//   const load = new createjs.Shape(graphic);
+//   return load;
+// }
 
 function managePayLoads(payLoadsArray, gameCanvas, gameStage) {
   payLoadsArray.forEach(
@@ -121,6 +121,17 @@ function managePayLoads(payLoadsArray, gameCanvas, gameStage) {
       }
     }
   );
+}
+
+function manageBlocks( blocksArray, gameCanvas, gameStage ) {
+  blocksArray.forEach( (block) => {
+    block.sprite.x = block.sprite.x + 2;
+    if( block.sprite.x > gameCanvas.width ) {
+      let removed = blocksArray.shift();
+      gameStage.removeChild( removed.sprite );
+      console.log('objec removed');
+    }
+  })
 }
 
 
