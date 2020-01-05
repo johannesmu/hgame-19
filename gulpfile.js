@@ -6,6 +6,7 @@ const beautify = require('gulp-beautify');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const rename = require('gulp-rename');
+const prefixer = require('gulp-autoprefixer');
 
 const { src, dest, series, parallel, watch } = require('gulp');
 const browsersync = require('browser-sync').create();
@@ -33,6 +34,7 @@ function css(){
   return src( 'scss/main.scss')
     .pipe(sass())
     .pipe(sourcemaps.init())
+    .pipe( prefixer())
     .pipe(cleanCSS())
     .pipe( rename({extname: '.min.css'}) )
     .pipe(sourcemaps.write('.'))

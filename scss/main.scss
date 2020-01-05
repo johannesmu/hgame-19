@@ -6,14 +6,15 @@ $main-font-size: 14px;
 
 body#game-body {
     @include reset;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
     color: $main-dark;
     font-family: $main-font-family;
     font-size: $main-font-size;
     #game-container {
         min-height: 100vh;
-        background-image: $main-bg;
+        // background-image: $main-bg;
+        background-color: blue;
         @include position(r);
         .ribbon {
             @include position(a);

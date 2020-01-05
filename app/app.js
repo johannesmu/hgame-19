@@ -60,7 +60,15 @@ window.addEventListener('load', () => {
             player.y = (player.y > 60)  ? player.y - playerMovementRate : player.y;
           }
         });
-        
+        window.addEventListener('touchstart', () => {
+          if (payLoads.length < 2) {
+            const payload = new Payload( player, windDirection );
+            player.gotoAndPlay('dropping');
+            stage.addChild(payload.sprite);
+            payLoads.push(payload);
+            player.gotoAndPlay('fly');
+          }
+        })
       }
     })
     .catch(() => { })
